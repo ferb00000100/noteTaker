@@ -2,6 +2,7 @@ const debug = require("debug")('app');
 const fs = require("fs");
 const path = require('path');
 
+
 const readDataFile = () => {
 	dataFile = JSON.parse(fs.readFileSync(path.join(`${__dirname}/../db`, 'db.json')));
 	return dataFile;
@@ -36,25 +37,14 @@ module.exports = function(app) {
 	});
 
 	app.delete('/api/notes/:id', (req, res) => {
-		let grabNotes = readDataFile();
-		let noteId = req.params.id;
-		debug("this is the id", id);
-		let allNotes = grabNotes.filter((note) => note.id  != noteId);
-		debug(allNotes);
-		// delete notes[id];
-		// debug("this is notes", notes)
-		// debug("this is notes with id", notes[id]);
-		// writeData(notes);
-		// res.send(notes);
+		let grabNotes = readDataFile();         // Grab all the notes from the db.json file
+		let noteId = req.params.id;             // Grab the ID parameter from the req and assign it to noteId
+		debug("this is the id", noteId);        //  debug
+		let allNotes = grabNotes.filter((note) => note.id  != noteId); // this will use the filter to create a new
+		// array with all the notes except the one with the ID that is clicked
+		// debug(allNotes);                     // debug
+		writeData(allNotes);                    // write the new array created with filter
+		res.send(allNotes);                     // Display the notes to the web page in the response
 	})
-
-	// app.delete('/api/notes/:id', (req, res) => {
-	// 	let noteData = readData();
-	// 	const noteId = req.params.id;
-	// 	const newNoteData = noteData.filter((note) => note.id != noteId);
-	//
-	// 	writeData(newNoteData);
-	// 	res.send(newNoteData);
-	// })
 
 }

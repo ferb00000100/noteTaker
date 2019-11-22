@@ -12,6 +12,7 @@ module.exports = function(app) {
 		debug('location: /');
 		res.sendFile(path.join(`${__dirname}/../public`, 'index.html'));
 	});
+
 	// You need to have * at the end or you will never get to the other route.
 	// app.get("*",(req, res) => {
 	// 	debug('location: *');
