@@ -7,14 +7,15 @@ const app = express();                    // assign express to the app variable
 const PORT = process.env.PORT || 3000;
 
 // Sets up the Express app to handle data parsing
-// app.use(morgan('combined'));            // more information to the console
-app.use(morgan('tiny'));           // less information to the console
+app.use(morgan('combined'));            // more information to the console
+// app.use(morgan('tiny'));           // less information to the console
 app.use(express.static(path.join(__dirname, "public")));  // static directory were we serve up public content
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+require("./routes/apiRoutes")(app);     // It matters what order these routes are loaded.  When html routes are
+										// loaded first everything defaults to the * route.
 require("./routes/htmlRoutes")(app);
-require("./routes/apiRoutes")(app);
 
 
 app.listen(PORT, function() {

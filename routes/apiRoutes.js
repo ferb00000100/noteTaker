@@ -18,19 +18,20 @@ const writeData = (dataFile) => {
 module.exports = function(app) {
 
 	app.get("/api/notes", function(req, res) {
-		debug("location: GET /api/notes");
+		// debug("location: GET /api/notes");
 		dataFile = readDataFile();
 		res.json(dataFile);
 	});
 
 	app.post("/api/notes", function(req, res) {
-		debug("location: POST /api/notes");
+		// debug("location: POST /api/notes");
 		const newNote = req.body;
-		debug("before ID is added to", newNote);
+		// debug("before ID is added to", newNote);
 		notes = readDataFile();
 		debug('this is notes',  notes);
-		newNote.id = notes.length + 1;       // This will add the ID in the note array
-		debug("newnote:",newNote, newNote.id);
+		newNote.id = notes.length + 1;        // This will add the ID in the note array you must add 1. and ID of 0
+											  // will not show the contents of the note with clicked.
+		// debug("newnote:",newNote, newNote.id);
 		notes.push(newNote);
 		writeData(notes);
 		res.json(notes);
